@@ -1,6 +1,5 @@
-open ReasonApolloHooks;
-
-module EditPersonConfig = [%graphql
+open ApolloHooks;
+module EditPersonMutation = [%graphql
   {|
     mutation updatePerson($id: ID!, $age: Int!, $name: String!) {
       updatePerson(id: $id, age: $age, name: $name) {
@@ -12,7 +11,40 @@ module EditPersonConfig = [%graphql
   |}
 ];
 
-module EditPersonMutation = Mutation.Make(EditPersonConfig);
+module OptimisticResponse = {
+  /* We need to manually serialise the mutation response into an object that apollo-client understands.
+   * See the docs here https://www.apollographql.com/docs/react/performance/optimistic-ui/
+   *
+   * There is a PR at graphql_ppx_re (https://github.com/baransu/graphql_ppx_re/pull/20) that adds a
+   * serialisation function directly to the generated mutation. That should make this step unnecessary for most
+   * usecases.
+   */
+  type t = {
+    .
+    "__typename": string,
+    "updatePerson": {
+      .
+      "__typename": string,
+      "age": int,
+      "id": string,
+      "name": string,
+    },
+  };
+
+  external cast: t => Js.Json.t = "%identity";
+
+  let make = (~id, ~name, ~age) =>
+    {
+      "__typename": "Mutation",
+      "updatePerson": {
+        "__typename": "Person",
+        "id": id,
+        "name": name,
+        "age": age,
+      },
+    }
+    ->cast;
+};
 
 type state = {
   id: string,
@@ -42,26 +74,25 @@ let make = () => {
     React.useReducer(reducer, {age: None, name: "", id: ""});
 
   let (editPersonMutation, _simple, _full) =
-    EditPersonMutation.use(
+    useMutation(
       ~refetchQueries=
         _ => {
           let query =
-            FilterByAge.PersonsOlderThanConfig.make(~age=filterAgeLimit, ());
-          [|ReasonApolloHooks.Utils.toQueryObj(query)|];
+            FilterByAge.PersonsOlderThanQuery.make(~age=filterAgeLimit, ());
+          [|toQueryObj(query)|];
         },
       ~update=
         (client, mutationResult) => {
           let data =
             mutationResult##data
             ->Belt.Option.flatMap(result => result##updatePerson);
-
           switch (data) {
           | Some(person) =>
             FilterByNameCache.updateCache(client, person, filterName)
           | None => ()
           };
         },
-      (),
+      EditPersonMutation.definition,
     );
 
   let handleSubmit = event => {
@@ -70,7 +101,14 @@ let make = () => {
     | Some(age) =>
       editPersonMutation(
         ~variables=
-          EditPersonConfig.make(~id=state.id, ~age, ~name=state.name, ())##variables,
+          EditPersonMutation.makeVariables(
+            ~age,
+            ~id=state.id,
+            ~name=state.name,
+            (),
+          ),
+        ~optimisticResponse=
+          OptimisticResponse.make(~id=state.id, ~name=state.name, ~age),
         (),
       )
       |> ignore
@@ -110,7 +148,7 @@ let make = () => {
         <div className="form-field">
           <input
             required=true
-            pattern="\d{1,3}"
+            pattern="\\d{1,3}"
             placeholder="Age"
             value={
               state.age
