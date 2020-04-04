@@ -1,17 +1,31 @@
 # reason-apollo-hooks
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-16-orange.svg?style=flat-square)](#contributors-)
+
+[![All Contributors](https://img.shields.io/badge/all_contributors-17-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-Reason bindings for the official @apollo/react-hooks
+Reason bindings for the official [@apollo/react-hooks](https://www.npmjs.com/package/@apollo/react-hooks)
 
-## Installation
+## Table of contents
+
+- [Installation](#installation-arrow_up)
+- [Setting up](#setting-up-arrow_up)
+  - [Usage with reason-apollo](#usage-with-reason-apollo-arrow_up)
+- [Available hooks](#available-hooks-arrow_up)
+  - [useQuery](#usequery-arrow_up)
+  - [useMutation](#usemutation-arrow_up)
+- [Cache](#cache-arrow_up)
+
+## Installation [:arrow_up:](#table-of-contents)
 
 ```
-yarn add reason-apollo-hooks reason-apollo@0.18.0 @apollo/react-hooks
+yarn add reason-apollo-hooks reason-apollo@0.19.0 @apollo/react-hooks
 ```
 
 BuckleScript <= 5.0.0
+
 ```
 yarn add reason-apollo-hooks@3.0.0 reason-apollo@0.17.0 @apollo/react-hooks
 ```
@@ -28,7 +42,7 @@ Then update your bsconfig.json
 ]
 ```
 
-## Setting up
+## Setting up [:arrow_up:](#table-of-contents)
 
 Add the provider in the top of the tree
 
@@ -49,7 +63,7 @@ let app =
  </ApolloHooks.Provider>
 ```
 
-### Usage with reason-apollo
+### Usage with reason-apollo [:arrow_up:](#table-of-contents)
 
 To use with `reason-apollo`'s `ReasonApollo.Provider` already present in your project:
 
@@ -66,9 +80,9 @@ ReactDOMRe.renderToElementWithId(
 );
 ```
 
-# Available hooks
+## Available hooks [:arrow_up:](#table-of-contents)
 
-## useQuery
+### useQuery [:arrow_up:](#table-of-contents)
 
 ```reason
 open ApolloHooks
@@ -148,7 +162,7 @@ let (simple, _full) =
   );
 ```
 
-## useMutation
+### useMutation [:arrow_up:](#table-of-contents)
 
 ```reason
 module ScreamMutation = [%graphql {|
@@ -212,7 +226,7 @@ let make = () => {
 }
 ```
 
-## Cache
+## Cache [:arrow_up:](#table-of-contents)
 
 There are a couple of caveats with manual cache updates.
 
@@ -292,8 +306,8 @@ By default, apollo will add field `__typename` to the queries and will use it to
 ## Getting it running
 
 ```sh
-npm install
-npm start
+yarn
+yarn start
 ```
 
 ## Contributors ✨
@@ -316,7 +330,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://github.com/yurijean"><img src="https://avatars0.githubusercontent.com/u/6414876?v=4" width="100px;" alt=""/><br /><sub><b>Yuri Jean Fabris</b></sub></a><br /><a href="https://github.com/Astrocoders/reason-apollo-hooks/commits?author=yurijean" title="Code">💻</a></td>
     <td align="center"><a href="https://twitter.com/rita_krutikova"><img src="https://avatars2.githubusercontent.com/u/5932274?v=4" width="100px;" alt=""/><br /><sub><b>Margarita Krutikova</b></sub></a><br /><a href="https://github.com/Astrocoders/reason-apollo-hooks/commits?author=MargaretKrutikova" title="Code">💻</a> <a href="https://github.com/Astrocoders/reason-apollo-hooks/pulls?q=is%3Apr+reviewed-by%3AMargaretKrutikova" title="Reviewed Pull Requests">👀</a> <a href="#ideas-MargaretKrutikova" title="Ideas, Planning, & Feedback">🤔</a></td>
-    <td align="center"><a href="https://github.com/Yakimych"><img src="https://avatars1.githubusercontent.com/u/5010901?v=4" width="100px;" alt=""/><br /><sub><b>Kyrylo Yakymenko</b></sub></a><br /><a href="https://github.com/Astrocoders/reason-apollo-hooks/issues?q=author%3AYakimych" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/Yakimych"><img src="https://avatars1.githubusercontent.com/u/5010901?v=4" width="100px;" alt=""/><br /><sub><b>Kyrylo Yakymenko</b></sub></a><br /><a href="https://github.com/Astrocoders/reason-apollo-hooks/issues?q=author%3AYakimych" title="Bug reports">🐛</a> <a href="https://github.com/Astrocoders/reason-apollo-hooks/commits?author=Yakimych" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/lukashambsch"><img src="https://avatars3.githubusercontent.com/u/7560008?v=4" width="100px;" alt=""/><br /><sub><b>Lukas Hambsch</b></sub></a><br /><a href="https://github.com/Astrocoders/reason-apollo-hooks/issues?q=author%3Alukashambsch" title="Bug reports">🐛</a></td>
     <td align="center"><a href="http://www.familyfive.app"><img src="https://avatars1.githubusercontent.com/u/579279?v=4" width="100px;" alt=""/><br /><sub><b>Jaap Frolich</b></sub></a><br /><a href="https://github.com/Astrocoders/reason-apollo-hooks/commits?author=jfrolich" title="Code">💻</a> <a href="https://github.com/Astrocoders/reason-apollo-hooks/pulls?q=is%3Apr+reviewed-by%3Ajfrolich" title="Reviewed Pull Requests">👀</a> <a href="#ideas-jfrolich" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://willcodefor.beer/"><img src="https://avatars1.githubusercontent.com/u/1478102?v=4" width="100px;" alt=""/><br /><sub><b>Rickard Laurin</b></sub></a><br /><a href="https://github.com/Astrocoders/reason-apollo-hooks/issues?q=author%3Abeliever" title="Bug reports">🐛</a></td>
@@ -325,11 +339,13 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://github.com/soulplant"><img src="https://avatars3.githubusercontent.com/u/16846?v=4" width="100px;" alt=""/><br /><sub><b>soulplant</b></sub></a><br /><a href="https://github.com/Astrocoders/reason-apollo-hooks/commits?author=soulplant" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/mbirkegaard"><img src="https://avatars0.githubusercontent.com/u/18616185?v=4" width="100px;" alt=""/><br /><sub><b>mbirkegaard</b></sub></a><br /><a href="https://github.com/Astrocoders/reason-apollo-hooks/commits?author=mbirkegaard" title="Code">💻</a></td>
+    <td align="center"><a href="https://strdr4605.github.io"><img src="https://avatars3.githubusercontent.com/u/16056918?v=4" width="100px;" alt=""/><br /><sub><b>Dragoș Străinu</b></sub></a><br /><a href="https://github.com/Astrocoders/reason-apollo-hooks/commits?author=strdr4605" title="Documentation">📖</a></td>
   </tr>
 </table>
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
