@@ -95,6 +95,8 @@ type options = {
   pollInterval: int,
   [@bs.optional]
   context: Context.t,
+  [@bs.optional]
+  partialRefetch: bool,
 };
 
 [@bs.module "@apollo/react-hooks"]
@@ -125,6 +127,7 @@ let useQuery:
     ~skip: bool=?,
     ~pollInterval: int=?,
     ~context: Context.t=?,
+    ~partialRefetch: bool=?,
     graphqlDefinition('data, _, _)
   ) =>
   (variant('data), queryResult('data)) =
@@ -137,6 +140,7 @@ let useQuery:
     ~skip=?,
     ~pollInterval=?,
     ~context=?,
+    ~partialRefetch=?,
     (parse, query, _),
   ) => {
     let jsResult =
@@ -153,6 +157,7 @@ let useQuery:
           ~skip?,
           ~pollInterval?,
           ~context?,
+          ~partialRefetch?,
           (),
         ),
       );
